@@ -38,10 +38,10 @@ class FormPage {
   }
 
   async fillMandatoryFields() {
-    const fakeName = faker.name.firstName();
-    const fakeSurname = faker.name.lastName();
+    const fakeName = faker.person.firstName();
+    const fakeSurname = faker.person.lastName();
     const fakeEmail = faker.internet.email();
-    const fakeMobile = faker.phone.number("##########");
+    const fakeMobile = faker.number.int({ min: 1000000000, max: 9999999999 }).toString();
     const fakeAddress = faker.location.streetAddress();
 
     await this.firstName.fill(fakeName);
@@ -49,6 +49,11 @@ class FormPage {
     await this.email.fill(fakeEmail);
     await this.genderMale.click();
     await this.mobile.fill(fakeMobile);
+
+    // Заполнение даты рождения
+    await this.dobInput.click();
+    await this.page.locator(".react-datepicker__day--015:not(.react-datepicker__day--outside-month)").click();
+
     await this.address.fill(fakeAddress);
 
     await this.state.click();
@@ -58,6 +63,7 @@ class FormPage {
   }
 
   async submitForm() {
+    await this.submitButton.scrollIntoViewIfNeeded();
     await this.submitButton.click();
   }
 
