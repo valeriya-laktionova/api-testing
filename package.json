@@ -11,9 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@cliqz/adblocker-playwright": "^1.34.0",
     "@cucumber/cucumber": "^11.3.0",
     "@faker-js/faker": "^9.8.0",
+    "@ghostery/adblocker-playwright": "^2.6.1",
     "@playwright/test": "^1.52.0",
+    "cross-fetch": "^4.1.0",
     "playwright": "^1.52.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"

@@ -1,7 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { TooltipsPage } from "../pages/ToolTipsPage";
+import { enableAdBlock } from "../utils/adblock.js";
 
 test("Check all tooltips", async ({ page }) => {
+  await enableAdBlock(page);
   const tooltipsPage = new TooltipsPage(page);
   await tooltipsPage.goto();
 

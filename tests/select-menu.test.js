@@ -1,11 +1,13 @@
 // tests/select-menu.test.js
 import { test, expect } from "@playwright/test";
 import { SelectMenuPage } from "../pages/SelectMenuPage.js";
+import { enableAdBlock } from "../utils/adblock.js";
 
 test.describe("Select Menu functionality", () => {
   let selectMenu;
 
   test.beforeEach(async ({ page }) => {
+    await enableAdBlock(page);
     selectMenu = new SelectMenuPage(page);
     await selectMenu.goto();
   });

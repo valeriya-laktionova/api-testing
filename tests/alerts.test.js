@@ -1,11 +1,13 @@
 const { test, expect } = require('@playwright/test');
 const { AlertsPage } = require('../pages/AlertsPage');
+const { enableAdBlock } = require('../utils/adblock');
 
 test.describe('Alerts on ToolsQA', () => {
   /** @type {import('../pages/AlertsPage').AlertsPage} */
   let alerts;
 
   test.beforeEach(async ({ page }) => {
+    await enableAdBlock(page);
     alerts = new AlertsPage(page);
     await alerts.goto(); 
   });

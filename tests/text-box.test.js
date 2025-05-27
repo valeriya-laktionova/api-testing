@@ -1,11 +1,13 @@
 const { test, expect } = require("@playwright/test");
 const { TextBoxPage } = require("../pages/TextBoxPage");
+const { enableAdBlock } = require('../utils/adblock');
 
 test.describe("Text Box form on ToolsQA", () => {
   /** @type {import('../pages/TextBoxPage').TextBoxPage} */
   let textBoxPage;
 
   test.beforeEach(async ({ page }) => {
+    await enableAdBlock(page)
     textBoxPage = new TextBoxPage(page);
     await textBoxPage.goto();
   });
