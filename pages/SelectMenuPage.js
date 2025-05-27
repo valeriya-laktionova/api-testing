@@ -9,13 +9,15 @@ export class SelectMenuPage {
     this.carsDropdown = page.locator("#cars");
     this.multiSelectInput = page.locator("#react-select-4-input");
     this.multiSelectMenu = page.locator(".css-26l3qy-menu");
-    this.multiSelectValues = page.locator(
-      ".css-1rhbuit-multiValue .css-12jo7m5"
-    );
+    this.multiSelectValues = page.locator(".css-1rhbuit-multiValue .css-12jo7m5");
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/select-menu");
+    await this.page.goto("https://demoqa.com/select-menu", {
+      timeout: 60000,
+      waitUntil: "load",
+    });
+    await this.page.waitForLoadState("networkidle");
   }
 
   async selectFromSelectValue(optionText) {
@@ -24,9 +26,7 @@ export class SelectMenuPage {
   }
 
   async getSelectedSelectValue() {
-    return this.selectValueDropdown
-      .locator('[class*="singleValue"]')
-      .textContent();
+    return this.selectValueDropdown.locator('[class*="singleValue"]').textContent();
   }
 
   async selectFromSelectOne(optionText) {
@@ -35,9 +35,7 @@ export class SelectMenuPage {
   }
 
   async getSelectedSelectOneValue() {
-    return this.selectOneDropdown
-      .locator('[class*="singleValue"]')
-      .textContent();
+    return this.selectOneDropdown.locator('[class*="singleValue"]').textContent();
   }
 
   async selectFromOldSelectMenuByText(optionText) {
@@ -66,9 +64,7 @@ export class SelectMenuPage {
   async selectMultipleCars(options) {
     await this.carsDropdown.waitFor({ state: "visible" });
     for (const option of options) {
-      await this.carsDropdown
-        .locator(`option[value="${option}"]`)
-        .waitFor({ state: "visible" });
+      await this.carsDropdown.locator(`option[value="${option}"]`).waitFor({ state: "visible" });
     }
     await this.carsDropdown.selectOption(options);
   }
