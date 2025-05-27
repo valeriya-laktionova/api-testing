@@ -3,7 +3,7 @@ const { defineConfig } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests',
   timeout: 60 * 1000,
-  retries: 1,
+  retries: 0,
   use: {
     headless: true,
     screenshot: 'only-on-failure',

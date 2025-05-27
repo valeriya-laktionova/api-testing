@@ -11,11 +11,7 @@ export class TooltipsPage {
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/tool-tips", {
-      timeout: 60000,
-      waitUntil: "load",
-    });
-    await this.page.waitForLoadState("networkidle");
+    await this.page.goto("https://demoqa.com/tool-tips");
   }
 
   async hoverAndCheckTooltip(selector, expectedText) {
