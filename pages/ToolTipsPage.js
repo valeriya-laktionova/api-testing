@@ -17,6 +17,7 @@ export class TooltipsPage {
   async hoverAndCheckTooltip(selector, expectedText) {
     await this.page.locator(selector).scrollIntoViewIfNeeded();
     await this.page.hover(selector, { force: true });
+    await this.page.waitForTimeout(500);
 
     const tooltipId = this.tooltipMap[selector];
     const tooltip = this.page.locator(`${tooltipId} .tooltip-inner`);
