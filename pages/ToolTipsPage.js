@@ -11,23 +11,34 @@ export class TooltipsPage {
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/tool-tips");
+    await this.page.goto("https://demoqa.com/tool-tips", {
+      waitUntil: "domcontentloaded",
+    });
   }
 
   async hoverAndCheckTooltip(selector, expectedText) {
     const tooltipId = this.tooltipMap[selector];
-    const tooltip = this.page.locator(`${tooltipId} .tooltip-inner`);
+    const tooltipSelector = `${tooltipId} .tooltip-inner`;
 
-    await this.page.locator(selector).scrollIntoViewIfNeeded();
-    await this.page.hover(selector, { force: true });
-    await this.page.waitForTimeout(1000); 
+    const element = this.page.locator(selector);
 
-    const isVisible = await tooltip.isVisible().catch(() => false);
-    if (!isVisible) {
-      console.warn(`❌ Tooltip "${tooltipId}" не виден`);
+    await element.scrollIntoViewIfNeeded();
+    await this.page.waitForTimeout(300); 
+    await element.hover({ force: true });
+    await this.page.waitForTimeout(300); 
+    await element.hover({ force: true }); 
+
+    try {
+      await this.page.waitForSelector(tooltipSelector, {
+        timeout: 3000,
+        state: "visible",
+      });
+    } catch {
+      console.warn(`❌ Tooltip "${tooltipId}" not appiar`);
       return false;
     }
 
+    const tooltip = this.page.locator(tooltipSelector);
     const text = await tooltip.textContent().catch(() => "");
     const trimmed = text?.trim();
     const result = trimmed === expectedText;
@@ -35,6 +46,7 @@ export class TooltipsPage {
     console.log(
       `🧪 Tooltip "${tooltipId}" = "${trimmed}" | expected: "${expectedText}" => ${result}`
     );
+
     return result;
   }
 }
