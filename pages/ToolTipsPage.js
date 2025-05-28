@@ -41,7 +41,7 @@ export class TooltipsPage {
         timeout: 5000,
       });
     } catch {
-      console.warn(`❌ Tooltip "${tooltipId}" not appiar`);
+      console.warn(`Tooltip "${tooltipId}" not appiar`);
       return false;
     }
 
@@ -51,7 +51,7 @@ export class TooltipsPage {
     const result = trimmed === expectedText;
 
     console.log(
-      `🧪 Tooltip "${tooltipId}" = "${trimmed}" | expected: "${expectedText}" => ${result}`
+      `Tooltip "${tooltipId}" = "${trimmed}" | expected: "${expectedText}" => ${result}`
     );
 
     return result;

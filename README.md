@@ -1,36 +1,41 @@
-# Autotests with Playwright
+How to Run Automated Tests
+Clone the repository:
 
-## Установка проекта
-
-1. Клонировать репозиторий:
-
-```bash
+bash
+Копировать код
 git clone https://github.com/AronAriel/AutoTest.git
-cd ИМЯ-РЕПОЗИТОРИЯ
-```
+cd AutoTest
+Install dependencies:
 
-2. Установить зависимости:
-
+bash
+Копировать код
 npm install
+Run tests:
 
-3. Запуск тестов:
+In headed mode (browser window visible):
 
-а) в режиме с браузером (headed):
-
+bash
+Копировать код
 npx playwright test --headed
+In headless mode (default, no browser window):
 
-б) В обычном (без окна браузера, headless):
-
+bash
+Копировать код
 npx playwright test
+Report:
 
-4. Описание проекта:
+Test reports are saved in the /playwright-report/ directory. To open the last report:
 
-Проект использует Playwright для автотестов.
-Блокировка рекламы реализована вручную через файл adblock.js без использования фреймворков.
-Все тесты находятся в папке /tests.
-Отчёты сохраняются в папку /playwright-report/.
+bash
+Копировать код
+npx playwright show-report
+Project Description
+This project uses Playwright for UI test automation.
 
-Тесты в Firefox могут нестабильно обрабатывать 
-события hover, особенно для тултипов. В Chrome 
-и Chromium поведение корректное, все тултипы 
-отображаются и тесты проходят.
+Ad blocking is implemented manually in adblock.js (without any external frameworks).
+
+All test files are located in the /tests folder.
+
+The configuration supports multiple browsers and screen sizes.
+
+Note: Firefox may sometimes fail to trigger tooltips on hover due to inconsistent event handling. In Chromium-based browsers, all tooltips behave correctly.
