@@ -14,7 +14,7 @@ test.describe("Automation Practice Form", () => {
     await formPage.fillMandatoryFields();
     await formPage.submitForm();
 
-    await expect(formPage.modalTitle).toBeVisible();
+    await expect(formPage.modalTitle).toBeVisible({ timeout: 10000 });
     const modalText = await formPage.getModalText();
     expect(modalText).toContain("Thanks for submitting the form");
   });

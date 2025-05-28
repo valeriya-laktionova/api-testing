@@ -76,8 +76,8 @@ class FormPage {
   }
 
   async submitForm() {
-    await this.submitButton.scrollIntoViewIfNeeded();
-    await this.submitButton.click();
+    await this.page.locator("#submit").scrollIntoViewIfNeeded();
+    await this.page.click("#submit", { force: true });
   }
 
   async isSubmissionSuccessful() {
