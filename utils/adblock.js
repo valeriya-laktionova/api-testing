@@ -1,17 +1,15 @@
-const { PlaywrightBlocker } = require('@ghostery/adblocker-playwright');
-const fetch = require('cross-fetch');
-
-let blocker;
-
-/**
- * Инициализирует и включает блокировку рекламы для страницы
- * @param {import('@playwright/test').Page} page 
- */
-async function enableAdBlock(page) {
-  if (!blocker) {
-    blocker = await PlaywrightBlocker.fromPrebuiltAdsAndTracking(fetch);
-  }
-  await blocker.enableBlockingInPage(page);
+async function blockAds(page) {
+  await page.addInitScript(() => {
+    const adSelectors = [
+      'iframe[src*="ads"]',
+      '[id^="ad-"]',
+      '[class*="advert"]',
+      '[class*="ads"]',
+    ];
+    adSelectors.forEach((selector) => {
+      document.querySelectorAll(selector).forEach((el) => el.remove());
+    });
+  });
 }
 
-module.exports = { enableAdBlock };
+module.exports = { blockAds };

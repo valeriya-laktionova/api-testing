@@ -29,6 +29,7 @@ class FormPage {
     await this.page.goto("https://demoqa.com/automation-practice-form", {
       waitUntil: "domcontentloaded",
     });
+
     await this.page.evaluate(() => {
       const fixedBan = document.querySelector("#fixedban");
       const footer = document.querySelector("footer");
@@ -41,7 +42,9 @@ class FormPage {
     const fakeName = faker.person.firstName();
     const fakeSurname = faker.person.lastName();
     const fakeEmail = faker.internet.email();
-    const fakeMobile = faker.number.int({ min: 1000000000, max: 9999999999 }).toString();
+    const fakeMobile = faker.number
+      .int({ min: 1000000000, max: 9999999999 })
+      .toString();
     const fakeAddress = faker.location.streetAddress();
 
     await this.firstName.fill(fakeName);
@@ -50,14 +53,24 @@ class FormPage {
     await this.genderMale.click();
     await this.mobile.fill(fakeMobile);
 
-    // Заполнение даты рождения
+    await this.dobInput.scrollIntoViewIfNeeded();
+    await this.page.waitForSelector("#dateOfBirthInput", { state: "visible" });
     await this.dobInput.click();
-    await this.page.locator(".react-datepicker__day--015:not(.react-datepicker__day--outside-month)").click();
+    await this.page
+      .locator(
+        ".react-datepicker__day--015:not(.react-datepicker__day--outside-month)"
+      )
+      .click();
 
     await this.address.fill(fakeAddress);
 
+    await this.state.scrollIntoViewIfNeeded();
+    await this.page.waitForSelector("#state", { state: "visible" });
     await this.state.click();
     await this.stateOption.first().click();
+
+    await this.city.scrollIntoViewIfNeeded();
+    await this.page.waitForSelector("#city", { state: "visible" });
     await this.city.click();
     await this.cityOption.first().click();
   }

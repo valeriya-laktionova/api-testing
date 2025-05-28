@@ -15,16 +15,26 @@ export class TooltipsPage {
   }
 
   async hoverAndCheckTooltip(selector, expectedText) {
-    await this.page.locator(selector).scrollIntoViewIfNeeded();
-    await this.page.hover(selector, { force: true });
-    await this.page.waitForTimeout(500);
-
     const tooltipId = this.tooltipMap[selector];
     const tooltip = this.page.locator(`${tooltipId} .tooltip-inner`);
 
-    await tooltip.waitFor({ state: "visible", timeout: 15000 });
+    await this.page.locator(selector).scrollIntoViewIfNeeded();
+    await this.page.hover(selector, { force: true });
+    await this.page.waitForTimeout(1000); 
 
-    const text = await tooltip.textContent();
-    return text?.trim() === expectedText;
+    const isVisible = await tooltip.isVisible().catch(() => false);
+    if (!isVisible) {
+      console.warn(`❌ Tooltip "${tooltipId}" не виден`);
+      return false;
+    }
+
+    const text = await tooltip.textContent().catch(() => "");
+    const trimmed = text?.trim();
+    const result = trimmed === expectedText;
+
+    console.log(
+      `🧪 Tooltip "${tooltipId}" = "${trimmed}" | expected: "${expectedText}" => ${result}`
+    );
+    return result;
   }
 }
