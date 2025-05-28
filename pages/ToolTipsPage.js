@@ -24,14 +24,21 @@ export class TooltipsPage {
 
     const element = this.page.locator(selector);
 
+    await this.page.bringToFront();
     await element.scrollIntoViewIfNeeded();
+    await this.page.waitForSelector(selector, {
+      state: "visible",
+      timeout: 5000,
+    });
+
+    await element.hover();
     await this.page.waitForTimeout(300);
     await element.hover();
     await this.page.waitForTimeout(500);
 
     try {
       await expect(this.page.locator(tooltipSelector)).toBeVisible({
-        timeout: 3000,
+        timeout: 5000,
       });
     } catch {
       console.warn(`❌ Tooltip "${tooltipId}" not appiar`);
