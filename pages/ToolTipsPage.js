@@ -1,3 +1,5 @@
+import { expect } from "@playwright/test";
+
 export class TooltipsPage {
   constructor(page) {
     this.page = page;
@@ -23,15 +25,13 @@ export class TooltipsPage {
     const element = this.page.locator(selector);
 
     await element.scrollIntoViewIfNeeded();
-    await this.page.waitForTimeout(300); 
-    await element.hover({ force: true });
-    await this.page.waitForTimeout(300); 
-    await element.hover({ force: true }); 
+    await this.page.waitForTimeout(300);
+    await element.hover();
+    await this.page.waitForTimeout(500);
 
     try {
-      await this.page.waitForSelector(tooltipSelector, {
+      await expect(this.page.locator(tooltipSelector)).toBeVisible({
         timeout: 3000,
-        state: "visible",
       });
     } catch {
       console.warn(`❌ Tooltip "${tooltipId}" not appiar`);
