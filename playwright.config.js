@@ -4,6 +4,7 @@ module.exports = defineConfig({
   testDir: "./tests",
   timeout: 30 * 1000,
   retries: 0,
+  fullyParallel: true,
   use: {
     headless: true,
     screenshot: "only-on-failure",

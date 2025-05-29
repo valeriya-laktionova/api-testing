@@ -1,3 +1,5 @@
+const { faker } = require("@faker-js/faker");
+
 class TextBoxPage {
   /**
    * @param {import('@playwright/test').Page} page
@@ -9,15 +11,11 @@ class TextBoxPage {
     this.currentAddressInput = page.locator("#currentAddress");
     this.permanentAddressInput = page.locator("#permanentAddress");
     this.submitButton = page.locator("#submit");
-
-    this.outputName = page.locator("#output #name");
-    this.outputEmail = page.locator("#output #email");
-    this.outputCurrentAddress = page.locator("#output p", {
-      hasText: "Current Address",
-    });
-    this.outputPermanentAddress = page.locator("#output p", {
-      hasText: "Permananet Address",
-    });
+    this.outputBox = page.locator("#output");
+    this.outputName = page.locator("#name");
+    this.outputEmail = page.locator("#email");
+    this.outputCurrentAddress = page.locator("p#currentAddress");
+    this.outputPermanentAddress = page.locator("p#permanentAddress");
   }
 
   async goto() {
@@ -26,15 +24,32 @@ class TextBoxPage {
     });
   }
 
-  async fillForm() {
-    await this.fullNameInput.fill("Valeria Example");
-    await this.emailInput.fill("valeria@example.com");
-    await this.currentAddressInput.fill("123 Main St, City");
-    await this.permanentAddressInput.fill("456 Side Ave, Region");
+  async fillFormWithRandomData() {
+    this.data = {
+      fullName: faker.person.fullName(),
+      email: faker.internet.email(),
+      currentAddress: faker.location.streetAddress(),
+      permanentAddress: faker.location.secondaryAddress(),
+    };
+
+    await this.fullNameInput.fill(this.data.fullName);
+    await this.emailInput.fill(this.data.email);
+    await this.currentAddressInput.fill(this.data.currentAddress);
+    await this.permanentAddressInput.fill(this.data.permanentAddress);
   }
 
   async submitForm() {
+    await this.submitButton.scrollIntoViewIfNeeded();
     await this.submitButton.click();
+  }
+
+  async getOutputData() {
+    return {
+      fullName: await this.outputName.textContent(),
+      email: await this.outputEmail.textContent(),
+      currentAddress: await this.outputCurrentAddress.textContent(),
+      permanentAddress: await this.outputPermanentAddress.textContent(),
+    };
   }
 }
 

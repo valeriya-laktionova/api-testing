@@ -2,25 +2,26 @@ const { test, expect } = require("@playwright/test");
 const { TextBoxPage } = require("../pages/TextBoxPage");
 const { blockAds } = require("../utils/adblock");
 
-test.describe("Text Box form on ToolsQA", () => {
-  /** @type {import('../pages/TextBoxPage').TextBoxPage} */
-  let textBoxPage;
+test.describe("Text Box form", () => {
+  /** @type {TextBoxPage} */
+  let textBox;
 
   test.beforeEach(async ({ page }) => {
-    textBoxPage = new TextBoxPage(page);
-     await blockAds(page);
-    await textBoxPage.goto();
+    textBox = new TextBoxPage(page);
+    await blockAds(page);
+    await textBox.goto();
   });
 
-  test("Fill in text box form with fixed data and verify output", async () => {
-    await textBoxPage.fillForm();
-    await textBoxPage.submitForm();
+  test("Submit filled form and verify output", async () => {
+    await textBox.fillFormWithRandomData();
+    await textBox.submitForm();
 
-    await expect(textBoxPage.outputName).toContainText("Valeria Example");
-    await expect(textBoxPage.outputEmail).toContainText("valeria@example.com");
-    await expect(textBoxPage.outputCurrentAddress).toContainText("123 Main St");
-    await expect(textBoxPage.outputPermanentAddress).toContainText(
-      "456 Side Ave"
-    );
+    const output = await textBox.getOutputData();
+    const input = textBox.data;
+
+    expect(output.fullName).toContain(input.fullName);
+    expect(output.email).toContain(input.email);
+    expect(output.currentAddress).toContain(input.currentAddress);
+    expect(output.permanentAddress).toContain(input.permanentAddress);
   });
 });
