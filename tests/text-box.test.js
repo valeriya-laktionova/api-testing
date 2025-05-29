@@ -7,8 +7,8 @@ test.describe("Text Box form on ToolsQA", () => {
   let textBoxPage;
 
   test.beforeEach(async ({ page }) => {
-    await blockAds(page);
     textBoxPage = new TextBoxPage(page);
+     await blockAds(page);
     await textBoxPage.goto();
   });
 

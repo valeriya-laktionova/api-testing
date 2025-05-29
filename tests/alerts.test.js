@@ -7,8 +7,8 @@ test.describe("Alerts on ToolsQA", () => {
   let alerts;
 
   test.beforeEach(async ({ page }) => {
-    await blockAds(page);
     alerts = new AlertsPage(page);
+    await blockAds(page);
     await alerts.goto();
   });
 

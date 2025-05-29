@@ -6,8 +6,8 @@ test.describe("Select Menu functionality", () => {
   let selectMenu;
 
   test.beforeEach(async ({ page }) => {
-    await blockAds(page);
     selectMenu = new SelectMenuPage(page);
+     await blockAds(page);
     await selectMenu.goto();
   });
 

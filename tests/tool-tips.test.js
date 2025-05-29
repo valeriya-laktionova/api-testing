@@ -3,8 +3,8 @@ import { TooltipsPage } from "../pages/ToolTipsPage";
 import { blockAds } from '../utils/adblock.js';
 
 test("Check all tooltips", async ({ page }) => {
-  await blockAds(page);
   const tooltipsPage = new TooltipsPage(page);
+  await blockAds(page);
   await tooltipsPage.goto();
 
   expect(

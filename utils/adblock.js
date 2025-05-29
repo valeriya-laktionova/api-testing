@@ -1,15 +1,20 @@
 async function blockAds(page) {
-  await page.addInitScript(() => {
-    const adSelectors = [
-      'iframe[src*="ads"]',
-      '[id^="ad-"]',
-      '[class*="advert"]',
-      '[class*="ads"]',
-    ];
-    adSelectors.forEach((selector) => {
-      document.querySelectorAll(selector).forEach((el) => el.remove());
+  const adUrlPatterns = [
+    '**/*ads*',
+    '**/*doubleclick.net*',
+    '**/*googlesyndication.com*',
+    '**/*adservice.google.com*',
+    '**/*adnxs.com*',
+    '**/*taboola.com*',
+    '**/*outbrain.com*',
+  ];
+
+  for (const pattern of adUrlPatterns) {
+    await page.route(pattern, (route) => {
+      console.log(`Blocked: ${route.request().url()}`);
+      route.abort();
     });
-  });
+  }
 }
 
 module.exports = { blockAds };

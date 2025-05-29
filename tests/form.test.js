@@ -6,9 +6,9 @@ test.describe("Automation Practice Form", () => {
   test("should fill mandatory fields and submit form successfully", async ({
     page,
   }) => {
-    await blockAds(page);
 
     const formPage = new FormPage(page);
+    await blockAds(page);
 
     await formPage.goto();
     await formPage.fillMandatoryFields();
