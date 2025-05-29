@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
-    "report": "npx playwright show-report"
+    "test:1920": "cucumber-js --world-parameters '{\"viewport\":{\"width\":1920,\"height\":1280}}'",
+    "test:1366": "cucumber-js --world-parameters '{\"viewport\":{\"width\":1366,\"height\":768}}'",
+    "test:all": "run-p test:1920 test:1366",
+    "test": "npx cucumber-js --format json:reports/report.json",
+    "report": "node generate-html-report.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +20,8 @@
     "@ghostery/adblocker-playwright": "^2.6.1",
     "@playwright/test": "^1.52.0",
     "cross-fetch": "^4.1.0",
+    "cucumber-html-reporter": "^6.0.0",
+    "npm-run-all": "^4.1.5",
     "playwright": "^1.52.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
