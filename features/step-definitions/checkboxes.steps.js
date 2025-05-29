@@ -14,8 +14,9 @@ When("I expand all checkboxes", async () => {
   await page.click('button[title="Expand all"]');
 });
 
-When("I check the {string} checkbox", async (label) => {
+When("I check the {string} checkbox", { timeout: 10000 }, async (label) => {
   const labelLocator = page.locator(`.rct-node >> text=${label}`);
+  await labelLocator.waitFor({ state: "visible", timeout: 10000 });
   await labelLocator.click();
 });
 

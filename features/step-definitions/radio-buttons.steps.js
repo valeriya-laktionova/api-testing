@@ -10,9 +10,15 @@ Given("I open the radio button page", async () => {
   await page.goto("https://demoqa.com/radio-button");
 });
 
-When("I select the {string} radio button", async (label) => {
-  await page.locator(`label:has-text("${label}")`).click(); // заменили getByLabel
-});
+When(
+  "I select the {string} radio button",
+  { timeout: 10000 },
+  async (label) => {
+    const radioButton = page.locator(`label:has-text("${label}")`);
+    await radioButton.waitFor({ state: "visible", timeout: 10000 });
+    await radioButton.click();
+  }
+);
 
 Then("the result should be {string}", async (expected) => {
   const result = await page.locator(".text-success").textContent();

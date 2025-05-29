@@ -11,16 +11,23 @@ Given("I open the date picker page", async () => {
   await page.goto("https://demoqa.com/date-picker");
 });
 
-When("I select the date {string}", async function (date) {
+When("I select the date {string}", { timeout: 15000 }, async function (date) {
   const input = page.locator("#datePickerMonthYearInput");
+  await input.waitFor({ state: "visible", timeout: 10000 });
   await input.click();
-  await input.fill(date);
+  await input.fill("");
+  await input.type(date);
   await input.press("Enter");
+  await page.waitForTimeout(1000);
 });
 
-Then("the selected date should be {string}", async function (expectedDate) {
-  const input = page.locator("#datePickerMonthYearInput");
-  const value = await input.inputValue();
-  expect(value).toBe(expectedDate);
-  await browser.close();
-});
+Then(
+  "the selected date should be {string}",
+  { timeout: 10000 },
+  async function (expectedDate) {
+    const input = page.locator("#datePickerMonthYearInput");
+    const value = await input.inputValue();
+    expect(value).toBe(expectedDate);
+    await browser.close();
+  }
+);
