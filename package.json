@@ -12,7 +12,10 @@
     "test:firefox:1920": "cross-env BROWSER=firefox VIEWPORT_WIDTH=1920 VIEWPORT_HEIGHT=1080 npm run test",
     "test:firefox:1366": "cross-env BROWSER=firefox VIEWPORT_WIDTH=1366 VIEWPORT_HEIGHT=768 npm run test",
 
-    "test:all": "npm-run-all --parallel test:chromium:* test:firefox:*"
+    "test:all": "npm-run-all --parallel test:chromium:* test:firefox:*",
+
+    "test:playwright": "npx playwright test",
+    "report:playwright": "npx playwright show-report"
 
   },
   "keywords": [],
