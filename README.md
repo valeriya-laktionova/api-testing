@@ -175,4 +175,4 @@ Artifacts uploaded:
 
 ---
 
-© 2025 AutoTest Project | Maintained by [AronAriel](https://github.com/AronAriel)
+© 2025 AutoTest Project 
