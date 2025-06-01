@@ -2,13 +2,15 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { chromium } = require("playwright");
 const { launchPage } = require("../../utils/setupPage");
+const { blockAds } = require("../../utils/adblock");
 
 let page;
 let browser;
 
 Given("I open the date picker page", async () => {
   ({ browser, page } = await launchPage());
-  await page.goto("https://demoqa.com/date-picker");
+  await blockAds(page);
+  await page.goto("https://demoqa.com/date-picker", { waitUntil: "domcontentloaded" });
 });
 
 When("I select the date {string}", { timeout: 15000 }, async function (date) {

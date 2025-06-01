@@ -2,13 +2,15 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
 const { SelectMenuPage } = require("../../pages/SelectMenuPage.js");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page, selectMenu;
 
 Given("I open the select menu page", async () => {
   ({ browser, page } = await launchPage());
+  await blockAds(page);
   selectMenu = new SelectMenuPage(page);
-  await selectMenu.goto();
+  await selectMenu.goto( { waitUntil: "domcontentloaded" });
 });
 
 When("I select {string} from select value", async (option) => {

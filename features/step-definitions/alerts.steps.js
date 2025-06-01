@@ -2,13 +2,15 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
 const { AlertsPage } = require("../../pages/AlertsPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page, alerts;
 
 Given("I open the alerts page", async () => {
   ({ browser, page } = await launchPage());
+  await blockAds(page);
   alerts = new AlertsPage(page);
-  await alerts.goto();
+  await alerts.goto({ waitUntil: "domcontentloaded" });
 });
 
 When("I click the alert button", async () => {

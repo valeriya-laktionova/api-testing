@@ -7,7 +7,7 @@ let browser, page;
 
 Given("I open the checkbox page", async () => {
   ({ browser, page } = await launchPage());
-  await page.goto("https://demoqa.com/checkbox");
+  await page.goto("https://demoqa.com/checkbox", { waitUntil: "domcontentloaded" });
 });
 
 When("I expand all checkboxes", async () => {

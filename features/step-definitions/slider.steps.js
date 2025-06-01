@@ -2,12 +2,14 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page;
 
-Given("I open the slider page", async () => {
+Given("I open the slider page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
-  await page.goto("https://demoqa.com/slider");
+  await blockAds(page);
+  await page.goto("https://demoqa.com/slider"), { timeout: 10000 }, { waitUntil: "domcontentloaded" };
 });
 
 When("I move the slider to {string}", { timeout: 10000 }, async (value) => {

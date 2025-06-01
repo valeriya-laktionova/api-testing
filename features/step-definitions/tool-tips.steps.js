@@ -2,13 +2,15 @@ const { Given, Then, After } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
 const { TooltipsPage } = require("../../pages/ToolTipsPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page, tooltipsPage;
 
 Given("I open the tool tips page", async () => {
   ({ browser, page } = await launchPage());
+  await blockAds(page);
   tooltipsPage = new TooltipsPage(page);
-  await tooltipsPage.goto();
+  await tooltipsPage.goto( { waitUntil: "domcontentloaded" });
 });
 
 Then(

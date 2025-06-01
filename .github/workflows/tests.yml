@@ -1,4 +1,4 @@
-name: Run Playwright Tests Daily and on PR
+name: Run Playwright & Cucumber Tests Daily and on PR
 
 on:
   pull_request:
@@ -27,6 +27,16 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test
+
+      - name: Run Cucumber.js tests
+        run: npm run test:all
+
+      - name: Upload Cucumber JSON report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: reports/report.json
 
       - name: Upload Playwright HTML report
         if: always()

@@ -2,12 +2,14 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { chromium } = require("playwright");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page;
 
-Given("I open the radio button page", async () => {
+Given("I open the radio button page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
-  await page.goto("https://demoqa.com/radio-button");
+  await blockAds(page);
+  await page.goto("https://demoqa.com/radio-button", { waitUntil: "domcontentloaded" });
 });
 
 When(

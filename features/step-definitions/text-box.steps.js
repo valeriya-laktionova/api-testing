@@ -2,13 +2,15 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
 const { TextBoxPage } = require("../../pages/TextBoxPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page, textBox;
 
 Given("I open the text box page", async () => {
   ({ browser, page } = await launchPage());
+  await blockAds(page);
   textBox = new TextBoxPage(page);
-  await textBox.goto();
+  await textBox.goto({ waitUntil: "domcontentloaded" });
 });
 
 When(

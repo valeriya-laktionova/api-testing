@@ -2,13 +2,15 @@ const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
 const { FormPage } = require("../../pages/FormPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page, formPage;
 
-Given("I open the automation practice form page", async () => {
+Given("I open the automation practice form page",  async () => {
   ({ browser, page } = await launchPage());
+  await blockAds(page);
   formPage = new FormPage(page);
-  await formPage.goto();
+  await formPage.goto( { waitUntil: "domcontentloaded" });
 });
 
 When("I fill all mandatory fields", { timeout: 20000 }, async () => {

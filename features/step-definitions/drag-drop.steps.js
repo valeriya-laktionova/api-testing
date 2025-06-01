@@ -1,13 +1,15 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
+const { blockAds } = require("../../utils/adblock");
 
 let browser, page;
 
 Given("I open the drag and drop page", { timeout: 40000 }, async () => {
   ({ browser, page } = await launchPage());
+  await blockAds(page);
 
-  await page.goto("https://demoqa.com/droppable", { waitUntil: "load" });
+  await page.goto("https://demoqa.com/droppable", { waitUntil: "domcontentloaded" });
   console.log("page loaded");
 
   await page.waitForLoadState("domcontentloaded");
