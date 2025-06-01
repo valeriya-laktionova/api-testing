@@ -1,114 +1,178 @@
+# 🧪 Test Automation Framework - AutoTest
 
-# Test Automation Framework
-## AutoTest
-
-This project is designed for testing the [https://demoqa.com] web application. It demonstrates automated testing using Playwright/Cucumber.
-
----
-
-##  Prerequisites
-
-- Node.js (v22 or higher)
-- npm or yarn
-- Chrome and Firefox browsers installed
+This project is designed for testing the [https://demoqa.com](https://demoqa.com) web application.
+It demonstrates automated end-to-end testing using **Playwright**, **Cucumber**, **GitHub Actions**, and **Page Object Model (POM)** architecture.
 
 ---
 
-##  Installation
+## ✅ Prerequisites
+
+- **Node.js** v22+
+- **npm** or **yarn**
+- **Chrome** and **Firefox** browsers installed
+
+---
+
+## 📦 Installation
 
 Clone the repository:
 
-```
+```bash
 git clone https://github.com/AronAriel/AutoTest
 cd AutoTest
 ```
 
 Install dependencies:
 
-```
+```bash
 npm install
 ```
 
+Install Playwright browsers (if not installed):
+
+```bash
+npx playwright install --with-deps
+```
+
 ---
 
-## 🧪 How to Launch Tests and Reports
+## 🚀 Running Tests
 
-### Run cucumber tests:
+### ➤ Run all Cucumber tests:
 
-```
+```bash
 npm test
 ```
 
-### Run cucumber report:
+Generates a **JSON report** to `reports/report.json`.
 
+### ➤ Run specific Cucumber tests by tag:
+
+```bash
+npx cucumber-js --tags "@alerts"
+npx cucumber-js --tags "@checkboxes"
+npx cucumber-js --tags "@tooltips and not @skip"
 ```
-npm report
+
+### ➤ Run HTML Cucumber report:
+
+```bash
+npm run report
 ```
 
+### ➤ Run all Playwright tests:
 
-### Run playwright tests:
-
-```
+```bash
 npm run test:playwright
 ```
 
-### Run playwright report:
+### ➤ Show Playwright HTML report:
 
-```
+```bash
 npm run report:playwright
 ```
 
-### Run with custom flags:
+### ➤ Run tests with custom viewport, grep, and project:
+
+```bash
+npx cross-env VIEWPORT_WIDTH=1920 VIEWPORT_HEIGHT=1080 npx playwright test --workers=2 --headed --grep "smoke" --project='chromium'
+```
+
+#### Parameters:
+
+- `--workers=2`: Parallel execution
+- `--headed`: Shows the browser (headless is default)
+- `--grep "smoke"`: Filter test cases by keyword
+- `--project='chromium'`: Run only on Chromium
+- `cross-env VIEWPORT_WIDTH / HEIGHT`: Sets custom resolution
+
+---
+
+## 🧪 Tagging Strategy
+
+Tags are used to organize and selectively run tests:
+
+- `@alerts` - Alerts tests
+- `@checkboxes` - Checkbox scenarios
+- `@tooltips` - Tooltip hover validations
+- `@date-picker` - Date picker tests
+- `@drag-drop` - Drag Drop tests
+- `@form` - Form tests
+- `@radio` - Radio tests
+- `selectmenu` - Select Menu tests
+- `slider` - Slider tests
+- `textbox` - Text Box tests
+
+
+You can combine tags:
+
+```bash
+npx cucumber-js --tags "@smoke and not @skip"
+```
+
+---
+
+## 🧱 Project Structure
 
 ```
-npx cross-env VIEPORT_WIDTH=1920 VIEPORT_HEIGHT=1080 npx playwright test --workers=2 --headed --grep "smoke" --project='chromium'
+AutoTest/
+│
+├── .github/workflows/           # CI/CD GitHub Actions configuration
+├── features/                    # Cucumber BDD feature files
+│   └── step-definitions/        # Step definitions for features
+├── pages/                       # Page Object Model (POM) classes
+├── support/                     # Hooks, environment setup
+├── test/fixtures/               # Additional reusable components
+├── utils/                       # Helpers (adblock, browser setup)
+├── reports/                     # JSON test results (cucumber)
+└── playwright-report/           # HTML reports for Playwright
 ```
 
-#### Where:
+---
 
-- `--workers=2`: Launch in parallel with 2 workers (default is 1).
-- `--headed`: Launches browser visually (headless by default).
-- `--grep "smoke"`: Run only tests marked with the keyword "smoke".
-- `--project='chromium'`: Run tests in Chromium (by default runs in both Chromium and Firefox).
-- `cross-env VIEPORT_WIDTH=1920 VIEPORT_HEIGHT=1080`: Sets custom viewport size (default: 1280x720).
+## 🧪 Technologies Used
+
+- [Playwright](https://playwright.dev/)
+- [Cucumber.js](https://github.com/cucumber/cucumber-js)
+- [GitHub Actions](https://github.com/features/actions)
+- [Faker.js](https://github.com/faker-js/faker)
+- [npm-run-all](https://github.com/mysticatea/npm-run-all)
 
 ---
 
-## 📁 Project Structure
+## ⚙️ CI/CD Pipeline (GitHub Actions)
 
-- `.github/workflows` - CI/CD file
-- `features/step-definition` - cucumber tests
-- `pages` - POM tests
-- `support` - hooks
-- `test/fixtures` - POM tests 
-- `utils` - adblock and setup
+Tests run automatically:
 
+- On **daily schedule** (`main` branch)
+- On **pull requests** targeting:
+  - `main`
+  - `master`
+  - `ui-tests`
 
----
+Artifacts uploaded:
 
-## 🛠 Technologies
-
-- Playwright
-- GitHub Actions
-- Cucumber
-- Fakerator
-
----
-
-## 🔁 CI/CD
-
-UI tests run daily from the following branches:
-- `main`
-- `master`
-- `ui-tests`
-
-Also runs on every pull request to these branches.
+- `playwright-report/` (HTML UI test report)
+- `reports/report.json` (Cucumber test result)
 
 ---
 
 ## 📊 Test Reports
 
-After each test run, a detailed report is generated.
+| Type         | Path                         | Format  |
+|--------------|------------------------------|---------|
+| Playwright   | `playwright-report/`         | HTML    |
+| Cucumber     | `reports/report.json`        | JSON    |
+| Cucumber HTML| Generated via `npm run report` | HTML |
 
-- Local report: `playwright-report/`
-- GitHub Actions: HTML report uploaded as an artifact
+---
+
+## 📌 Notes
+
+- Make sure to remove deprecated CLI flags (e.g. `--publish-quiet`)
+- Use `defaultTimeout: 30000` in `cucumber.config.js` to avoid test timeouts
+- To run tests in parallel across browsers: `npm run test:all`
+
+---
+
+© 2025 AutoTest Project | Maintained by [AronAriel](https://github.com/AronAriel)
