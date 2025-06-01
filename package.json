@@ -16,7 +16,6 @@
 
     "test:playwright": "npx playwright test",
     "report:playwright": "npx playwright show-report"
-
   },
   "keywords": [],
   "author": "",

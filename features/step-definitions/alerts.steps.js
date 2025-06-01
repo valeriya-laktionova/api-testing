@@ -60,21 +60,19 @@ Then("the prompt result should be {string}", async (result) => {
 });
 
 When("I accept the confirm alert", async () => {
- 
   page.once("dialog", async (dialog) => {
     await dialog.accept();
   });
-  
+
   await alerts.clickConfirmButton();
   await page.waitForTimeout(500);
 });
 
 When("I enter {string} in the prompt alert", async (input) => {
-  
   page.once("dialog", async (dialog) => {
     await dialog.accept(input);
   });
-  
+
   await alerts.clickPromptButton();
   await page.waitForTimeout(500);
 });
