@@ -1,4 +1,4 @@
-export class SelectMenuPage {
+class SelectMenuPage {
   constructor(page) {
     this.page = page;
     this.selectValueDropdown = page.locator("#withOptGroup");
@@ -77,3 +77,5 @@ export class SelectMenuPage {
     return this.carsDropdown.locator("option:checked").allTextContents();
   }
 }
+
+module.exports = { SelectMenuPage };

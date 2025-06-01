@@ -1,6 +1,6 @@
-import { expect } from "@playwright/test";
+const { expect } = require("@playwright/test");
 
-export class TooltipsPage {
+class TooltipsPage {
   constructor(page) {
     this.page = page;
 
@@ -57,3 +57,5 @@ export class TooltipsPage {
     return result;
   }
 }
+
+module.exports = { TooltipsPage };

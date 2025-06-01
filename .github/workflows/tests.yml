@@ -1,4 +1,4 @@
-name: Run Playwright Tests Daily and on PR
+name: Run Playwright & Cucumber Tests Daily and on PR
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
     - cron: '0 0 * * *'
 
 jobs:
-  run-tests:
+  install-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,8 +25,18 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Run Playwright UI tests
+        run: npm run test:playwright
+
+      - name: Run Cucumber tests on all browsers
+        run: npm run test:all
+
+      - name: Upload Cucumber JSON report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: reports/report.json
 
       - name: Upload Playwright HTML report
         if: always()
