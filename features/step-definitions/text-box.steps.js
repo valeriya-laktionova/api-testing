@@ -6,7 +6,7 @@ const { blockAds } = require("../../utils/adblock");
 
 let browser, page, textBox;
 
-Given("I open the text box page", async () => {
+Given("I open the text box page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
   await blockAds(page);
   textBox = new TextBoxPage(page);

@@ -5,9 +5,11 @@ const { launchPage } = require("../../utils/setupPage");
 
 let browser, page;
 
-Given("I open the checkbox page", async () => {
+Given("I open the checkbox page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
-  await page.goto("https://demoqa.com/checkbox", { waitUntil: "domcontentloaded" });
+  await page.goto("https://demoqa.com/checkbox", {
+    waitUntil: "domcontentloaded",
+  });
 });
 
 When("I expand all checkboxes", async () => {

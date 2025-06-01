@@ -6,11 +6,11 @@ const { blockAds } = require("../../utils/adblock");
 
 let browser, page, selectMenu;
 
-Given("I open the select menu page", async () => {
+Given("I open the select menu page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
   await blockAds(page);
   selectMenu = new SelectMenuPage(page);
-  await selectMenu.goto( { waitUntil: "domcontentloaded" });
+  await selectMenu.goto({ waitUntil: "domcontentloaded" });
 });
 
 When("I select {string} from select value", async (option) => {

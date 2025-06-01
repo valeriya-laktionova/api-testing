@@ -9,7 +9,9 @@ let browser, page;
 Given("I open the radio button page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
   await blockAds(page);
-  await page.goto("https://demoqa.com/radio-button", { waitUntil: "domcontentloaded" });
+  await page.goto("https://demoqa.com/radio-button", {
+    waitUntil: "domcontentloaded",
+  });
 });
 
 When(

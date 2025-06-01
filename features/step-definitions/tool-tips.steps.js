@@ -6,11 +6,11 @@ const { blockAds } = require("../../utils/adblock");
 
 let browser, page, tooltipsPage;
 
-Given("I open the tool tips page", async () => {
+Given("I open the tool tips page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
   await blockAds(page);
   tooltipsPage = new TooltipsPage(page);
-  await tooltipsPage.goto( { waitUntil: "domcontentloaded" });
+  await tooltipsPage.goto({ waitUntil: "domcontentloaded" });
 });
 
 Then(

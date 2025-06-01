@@ -6,12 +6,16 @@ const { blockAds } = require("../../utils/adblock");
 
 let browser, page, formPage;
 
-Given("I open the automation practice form page",  async () => {
-  ({ browser, page } = await launchPage());
-  await blockAds(page);
-  formPage = new FormPage(page);
-  await formPage.goto( { waitUntil: "domcontentloaded" });
-});
+Given(
+  "I open the automation practice form page",
+  { timeout: 20000 },
+  async () => {
+    ({ browser, page } = await launchPage());
+    await blockAds(page);
+    formPage = new FormPage(page);
+    await formPage.goto({ waitUntil: "domcontentloaded" });
+  }
+);
 
 When("I fill all mandatory fields", { timeout: 20000 }, async () => {
   await formPage.fillMandatoryFields();

@@ -6,7 +6,7 @@ const { blockAds } = require("../../utils/adblock");
 
 let browser, page, alerts;
 
-Given("I open the alerts page", async () => {
+Given("I open the alerts page", { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
   await blockAds(page);
   alerts = new AlertsPage(page);
