@@ -28,17 +28,8 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
 
-      - name: Run Cucumber.js tests 1
-        run: npm run test:chromium:1920
-
-      - name: Run Cucumber.js tests 2
-        run: npm run test:chromium:1366
-
-      - name: Run Cucumber.js tests 3
-        run: npm run test:firefox:1920
-
-      - name: Run Cucumber.js tests 4
-        run: npm run test:firefox:1366
+      - name: Run Cucumber.js tests
+        run: npm run test
 
       - name: Upload Cucumber JSON report
         if: always()
