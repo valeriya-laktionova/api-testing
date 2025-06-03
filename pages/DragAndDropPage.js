@@ -45,6 +45,9 @@ class DragAndDropPage extends BasePage {
 
   await this.resultText.waitFor({ state: "visible", timeout: 5000 });
 }
+  async getDropResultText() {
+    return (await this.resultText.textContent()).trim();
+  }
 
 }
 
