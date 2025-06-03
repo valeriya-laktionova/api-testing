@@ -40,17 +40,9 @@ class TooltipsPage extends BasePage {
 
     await this.page.bringToFront();
     await element.scrollIntoViewIfNeeded();
-    await this.page.waitForSelector(elementData.elementSelector, {
-      state: "visible",
-      timeout: 5000,
-    });
-
+    await element.waitFor({ state: "visible", timeout: 5000 });
     await element.hover();
-    await this.page.waitForTimeout(300);
-    await element.hover();
-    await this.page.waitForTimeout(500);
-
-    await expect(tooltip).toBeVisible({ timeout: 5000 });
+    await expect(tooltip).toBeVisible({ timeout: 3000 });
 
     const text = await tooltip.textContent();
     const trimmed = text?.trim();

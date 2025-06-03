@@ -16,7 +16,10 @@ class DatePickerPage extends BasePage {
     await this.dateInput.fill("");
     await this.dateInput.type(dateString);
     await this.dateInput.press("Enter");
-    await this.page.waitForTimeout(500);
+    await this.page.waitForSelector(`#datePickerMonthYearInput[value="${dateString}"]`, {
+      state: "attached",
+      timeout: 3000
+    });
   }
 
   async getSelectedDate() {

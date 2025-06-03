@@ -43,7 +43,12 @@ class DragAndDropPage extends BasePage {
     );
     await this.page.mouse.up();
 
-    await this.page.waitForTimeout(1000);
+    await this.resultText.waitFor({ state: "visible" });
+    await this.page.waitForFunction(
+    (element, expectedText) => element.textContent.trim() === expectedText,
+    this.resultText,
+    "Dropped!"
+);
   }
 
   async getDropResultText() {
