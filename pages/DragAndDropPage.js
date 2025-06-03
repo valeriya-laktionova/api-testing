@@ -25,35 +25,27 @@ class DragAndDropPage extends BasePage {
 
     await this.source.scrollIntoViewIfNeeded();
 
-    const sourceBox = await this.source.boundingBox();
-    const targetBox = await this.target.boundingBox();
+  const sourceBox = await this.source.boundingBox();
+  const targetBox = await this.target.boundingBox();
 
-    if (!sourceBox || !targetBox) {
-      throw new Error("Bounding boxes not found");
-    }
-
-    await this.page.mouse.move(
-      sourceBox.x + sourceBox.width / 2,
-      sourceBox.y + sourceBox.height / 2
-    );
-    await this.page.mouse.down();
-    await this.page.mouse.move(
-      targetBox.x + targetBox.width / 2,
-      targetBox.y + targetBox.height / 2
-    );
-    await this.page.mouse.up();
-
-    await this.resultText.waitFor({ state: "visible" });
-    await this.page.waitForFunction(
-    (element, expectedText) => element.textContent.trim() === expectedText,
-    this.resultText,
-    "Dropped!"
-);
+  if (!sourceBox || !targetBox) {
+    throw new Error("Bounding boxes not found");
   }
 
-  async getDropResultText() {
-    return (await this.resultText.textContent()).trim();
-  }
+  await this.page.mouse.move(
+    sourceBox.x + sourceBox.width / 2,
+    sourceBox.y + sourceBox.height / 2
+  );
+  await this.page.mouse.down();
+  await this.page.mouse.move(
+    targetBox.x + targetBox.width / 2,
+    targetBox.y + targetBox.height / 2
+  );
+  await this.page.mouse.up();
+
+  await this.resultText.waitFor({ state: "visible", timeout: 5000 });
+}
+
 }
 
 module.exports = { DragAndDropPage };
