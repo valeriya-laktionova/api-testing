@@ -6,22 +6,10 @@ class TooltipsPage extends BasePage {
     super(page);
 
     this.elementsMap = {
-      button: {
-        elementSelector: "#toolTipButton",
-        tooltipSelector: "#buttonToolTip .tooltip-inner",
-      },
-      textField: {
-        elementSelector: "#toolTipTextField",
-        tooltipSelector: "#textFieldToolTip .tooltip-inner",
-      },
-      contraryLink: {
-        elementSelector: "#texToolTopContainer a:nth-child(1)",
-        tooltipSelector: "#contraryTexToolTip .tooltip-inner",
-      },
-      sectionLink: {
-        elementSelector: "#texToolTopContainer a:nth-child(2)",
-        tooltipSelector: "#sectionToolTip .tooltip-inner",
-      },
+      button: "#toolTipButton",
+      textField: "#toolTipTextField",
+      contraryLink: "#texToolTopContainer a:nth-child(1)",
+      sectionLink: "#texToolTopContainer a:nth-child(2)",
     };
   }
 
@@ -30,18 +18,18 @@ class TooltipsPage extends BasePage {
   }
 
   async hoverAndCheckTooltip(elementName, expectedText) {
-    const elementData = this.elementsMap[elementName];
-    if (!elementData) {
+    const elementSelector = this.elementsMap[elementName];
+    if (!elementSelector) {
       throw new Error(`Unknown element name: ${elementName}`);
     }
 
-    const element = this.page.locator(elementData.elementSelector);
-    const tooltip = this.page.locator(elementData.tooltipSelector);
+    const element = this.page.locator(elementSelector);
+    const tooltip = this.page.locator(".tooltip-inner");
 
-    await this.page.bringToFront();
     await element.scrollIntoViewIfNeeded();
     await element.waitFor({ state: "visible", timeout: 5000 });
     await element.hover();
+
     await expect(tooltip).toBeVisible({ timeout: 3000 });
 
     const text = await tooltip.textContent();
