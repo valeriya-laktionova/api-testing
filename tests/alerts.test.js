@@ -27,7 +27,8 @@ test.describe("Alerts on ToolsQA", () => {
       await dialog.accept();
     });
     await alerts.clickTimerAlertButton();
-    await page.waitForTimeout(6000);
+    await alerts.clickTimerAlertButton();
+    await page.waitForSelector('#alert-triggered', { state: 'visible' });
   });
 
   test("Confirm alert appears and is accepted", async ({ page }) => {
@@ -43,7 +44,7 @@ test.describe("Alerts on ToolsQA", () => {
   test("Prompt alert appears and input is handled", async ({ page }) => {
     page.once("dialog", async (dialog) => {
       expect(dialog.type()).toBe("prompt");
-      expect(dialog.message()).toBe("Please enter your name");
+      expect(dialog.message()).toBe("Please enter your name");  
       await dialog.accept("Test User");
     });
     await alerts.clickPromptButton();
