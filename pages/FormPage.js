@@ -1,11 +1,9 @@
 const { faker } = require("@faker-js/faker");
+const { BasePage } = require("./BasePage");
 
-class FormPage {
-  /**
-   * @param {import('@playwright/test').Page} page
-   */
+class FormPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.firstName = page.locator("#firstName");
     this.lastName = page.locator("#lastName");
     this.email = page.locator("#userEmail");
@@ -32,25 +30,14 @@ class FormPage {
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/automation-practice-form", {
-      waitUntil: "domcontentloaded",
-    });
-
-    await this.page.evaluate(() => {
-      const fixedBan = document.querySelector("#fixedban");
-      const footer = document.querySelector("footer");
-      if (fixedBan) fixedBan.remove();
-      if (footer) footer.remove();
-    });
+    await this.open("https://demoqa.com/automation-practice-form");
   }
 
   async fillMandatoryFields() {
     this.fakeName = faker.person.firstName();
     this.fakeSurname = faker.person.lastName();
     this.fakeEmail = faker.internet.email();
-    this.fakeMobile = faker.number
-      .int({ min: 1000000000, max: 9999999999 })
-      .toString();
+    this.fakeMobile = faker.number.int({ min: 1000000000, max: 9999999999 }).toString();
     this.fakeAddress = faker.location.streetAddress();
 
     await this.firstName.fill(this.fakeName);
@@ -63,9 +50,7 @@ class FormPage {
     await this.page.waitForSelector("#dateOfBirthInput", { state: "visible" });
     await this.dobInput.click();
     await this.page
-      .locator(
-        ".react-datepicker__day--015:not(.react-datepicker__day--outside-month)"
-      )
+      .locator(".react-datepicker__day--015:not(.react-datepicker__day--outside-month)")
       .click();
 
     await this.address.fill(this.fakeAddress);
@@ -82,8 +67,8 @@ class FormPage {
   }
 
   async submitForm() {
-    await this.page.locator("#submit").scrollIntoViewIfNeeded();
-    await this.page.click("#submit", { force: true });
+    await this.submitButton.scrollIntoViewIfNeeded();
+    await this.submitButton.click({ force: true });
   }
 
   async isSubmissionSuccessful() {

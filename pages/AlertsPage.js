@@ -1,9 +1,11 @@
-class AlertsPage {
+const { BasePage } = require('./BasePage');
+
+class AlertsPage extends BasePage {
   /**
    * @param {import('@playwright/test').Page} page
    */
   constructor(page) {
-    this.page = page;
+    super(page);
     this.alertButton = page.locator('#alertButton');
     this.timerAlertButton = page.locator('#timerAlertButton');
     this.confirmButton = page.locator('#confirmButton');
@@ -13,7 +15,7 @@ class AlertsPage {
   }
 
   async goto() {
-     await this.page.goto('https://demoqa.com/alerts', { waitUntil: 'domcontentloaded' });
+    await this.open('https://demoqa.com/alerts');
   }
 
   async clickAlertButton() {

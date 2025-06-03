@@ -1,6 +1,8 @@
-class SelectMenuPage {
+const { BasePage } = require("./BasePage");
+
+class SelectMenuPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.selectValueDropdown = page.locator("#withOptGroup");
     this.selectValueMenu = page.locator(".css-26l3qy-menu");
     this.selectOneDropdown = page.locator("#selectOne");
@@ -9,13 +11,11 @@ class SelectMenuPage {
     this.carsDropdown = page.locator("#cars");
     this.multiSelectInput = page.locator("#react-select-4-input");
     this.multiSelectMenu = page.locator(".css-26l3qy-menu");
-    this.multiSelectValues = page.locator(
-      ".css-1rhbuit-multiValue .css-12jo7m5"
-    );
+    this.multiSelectValues = page.locator(".css-1rhbuit-multiValue .css-12jo7m5");
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/select-menu");
+    await this.open("https://demoqa.com/select-menu");
   }
 
   async selectFromSelectValue(optionText) {
@@ -24,9 +24,7 @@ class SelectMenuPage {
   }
 
   async getSelectedSelectValue() {
-    return this.selectValueDropdown
-      .locator('[class*="singleValue"]')
-      .textContent();
+    return this.selectValueDropdown.locator('[class*="singleValue"]').textContent();
   }
 
   async selectFromSelectOne(optionText) {
@@ -35,9 +33,7 @@ class SelectMenuPage {
   }
 
   async getSelectedSelectOneValue() {
-    return this.selectOneDropdown
-      .locator('[class*="singleValue"]')
-      .textContent();
+    return this.selectOneDropdown.locator('[class*="singleValue"]').textContent();
   }
 
   async selectFromOldSelectMenuByText(optionText) {
@@ -66,9 +62,7 @@ class SelectMenuPage {
   async selectMultipleCars(options) {
     await this.carsDropdown.waitFor({ state: "visible" });
     for (const option of options) {
-      await this.carsDropdown
-        .locator(`option[value="${option}"]`)
-        .waitFor({ state: "visible" });
+      await this.carsDropdown.locator(`option[value="${option}"]`).waitFor({ state: "visible" });
     }
     await this.carsDropdown.selectOption(options);
   }

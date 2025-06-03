@@ -1,6 +1,8 @@
-class DragAndDropPage {
+const { BasePage } = require("./BasePage");
+
+class DragAndDropPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.container = page.locator("#droppableExample-tabpane-simple");
     this.source = this.container.locator("#draggable");
     this.target = this.container.locator("#droppable").first();
@@ -8,17 +10,7 @@ class DragAndDropPage {
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/droppable", {
-      waitUntil: "domcontentloaded",
-    });
-
-    await this.page.evaluate(() => {
-      const fixedBan = document.querySelector("#fixedban");
-      const footer = document.querySelector("footer");
-      if (fixedBan) fixedBan.remove();
-      if (footer) footer.remove();
-    });
-
+    await this.open("https://demoqa.com/droppable");
     const simpleTab = this.page.locator("#droppableExample-tab-simple");
     if (await simpleTab.isVisible()) {
       await simpleTab.click();

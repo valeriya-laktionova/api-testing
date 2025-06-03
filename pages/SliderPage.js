@@ -1,14 +1,14 @@
-class SliderPage {
+const { BasePage } = require("./BasePage");
+
+class SliderPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.slider = page.locator('input[type="range"]');
     this.sliderOutput = page.locator("#sliderValue");
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/slider", {
-      waitUntil: "domcontentloaded",
-    });
+    await this.open("https://demoqa.com/slider");
   }
 
   async setSliderValue(value) {

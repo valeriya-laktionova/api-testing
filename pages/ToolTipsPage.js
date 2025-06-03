@@ -1,8 +1,9 @@
 const { expect } = require("@playwright/test");
+const { BasePage } = require("./BasePage");
 
-class TooltipsPage {
+class TooltipsPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
 
     this.elementsMap = {
       button: {
@@ -25,9 +26,7 @@ class TooltipsPage {
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/tool-tips", {
-      waitUntil: "domcontentloaded",
-    });
+    await this.open("https://demoqa.com/tool-tips");
   }
 
   async hoverAndCheckTooltip(elementName, expectedText) {

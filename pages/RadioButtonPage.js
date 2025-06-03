@@ -1,12 +1,12 @@
-class RadioButtonPage {
+const { BasePage } = require("./BasePage");
+
+class RadioButtonPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/radio-button", {
-      waitUntil: "domcontentloaded",
-    });
+    await this.open("https://demoqa.com/radio-button");
   }
 
   async selectRadio(label) {

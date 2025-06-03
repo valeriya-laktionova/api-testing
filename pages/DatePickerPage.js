@@ -1,13 +1,13 @@
-class DatePickerPage {
+const { BasePage } = require('./BasePage');
+
+class DatePickerPage extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.dateInput = page.locator("#datePickerMonthYearInput");
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/date-picker", {
-      waitUntil: "domcontentloaded",
-    });
+    await this.open("https://demoqa.com/date-picker");
     await this.dateInput.waitFor({ state: "visible" });
   }
 

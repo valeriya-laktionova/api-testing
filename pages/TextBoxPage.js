@@ -1,11 +1,12 @@
 const { faker } = require("@faker-js/faker");
+const { BasePage } = require("./BasePage");
 
-class TextBoxPage {
+class TextBoxPage extends BasePage {
   /**
    * @param {import('@playwright/test').Page} page
    */
   constructor(page) {
-    this.page = page;
+    super(page);
     this.fullNameInput = page.locator("#userName");
     this.emailInput = page.locator("#userEmail");
     this.currentAddressInput = page.locator("#currentAddress");
@@ -19,9 +20,7 @@ class TextBoxPage {
   }
 
   async goto() {
-    await this.page.goto("https://demoqa.com/text-box", {
-      waitUntil: "domcontentloaded",
-    });
+    await this.open("https://demoqa.com/text-box");
   }
 
   async fillFormWithRandomData() {
