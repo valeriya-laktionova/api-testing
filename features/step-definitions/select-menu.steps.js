@@ -1,4 +1,4 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
+const { Given, When, Then, After } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
 const { launchPage } = require("../../utils/setupPage");
 const { SelectMenuPage } = require("../../pages/SelectMenuPage.js");
@@ -32,19 +32,42 @@ When(
     await selectMenu.selectFromMultiSelectDropDown(opts);
   }
 );
-//TODO do not hard code elements in the step
-// rewrite to the "Selected value in field {string} contain {value}" async(field, value) {
-Then("the selected values should be correct", async () => {
-  const selectValue = await selectMenu.getSelectedSelectValue();
-  expect(selectValue?.trim()).toBe("Group 2, option 1");
 
-  const selectOneValue = await selectMenu.getSelectedSelectOneValue();
-  expect(selectOneValue?.trim()).toBe("Other");
+Then(
+  "Selected value in field {string} should contain {string}",
+  async (field, expectedValue) => {
+    let actualValues;
 
-  const oldSelectValue = await selectMenu.getSelectedOldSelectMenuValue();
-  expect(oldSelectValue?.trim()).toBe("Green");
+    switch (field.toLowerCase()) {
+      case "select value":
+        actualValues = await selectMenu.getSelectedSelectValue();
+        expect(actualValues?.trim()).toContain(expectedValue);
+        break;
+      case "select one":
+        actualValues = await selectMenu.getSelectedSelectOneValue();
+        expect(actualValues?.trim()).toContain(expectedValue);
+        break;
+      case "old select menu":
+        actualValues = await selectMenu.getSelectedOldSelectMenuValue();
+        expect(actualValues?.trim()).toContain(expectedValue);
+        break;
+      case "multi select dropdown":
+        actualValues = await selectMenu.getSelectedMultiSelectDropDownValues();
+        expect(actualValues).toEqual(expect.arrayContaining([expectedValue]));
+        break;
+      case "cars":
+        actualValues = await selectMenu.getSelectedCarsValues();
+        expect(actualValues).toEqual(expect.arrayContaining([expectedValue]));
+        break;
+      default:
+        throw new Error(`Unknown field name: ${field}`);
+    }
+  }
+);
 
-  const multiSelected = await selectMenu.getSelectedMultiSelectDropDownValues();
-  expect(multiSelected).toEqual(expect.arrayContaining(["Black", "Blue"]));
-  await browser.close();
+After(async () => {
+  if (browser) {
+    await browser.close();
+  }
 });
+

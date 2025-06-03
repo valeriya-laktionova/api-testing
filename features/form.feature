@@ -6,3 +6,4 @@ Feature: Automation Practice Form
     When I fill all mandatory fields
     And I submit the form
     Then I should see a modal with text "Thanks for submitting the form"
+    Then the form fields should contain the entered data

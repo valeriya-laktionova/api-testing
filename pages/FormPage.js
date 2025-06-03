@@ -23,6 +23,12 @@ class FormPage {
     this.submitButton = page.locator("#submit");
     this.modalTitle = page.locator("#example-modal-sizes-title-lg");
     this.modal = page.locator(".modal-content");
+
+    this.fakeName = "";
+    this.fakeSurname = "";
+    this.fakeEmail = "";
+    this.fakeMobile = "";
+    this.fakeAddress = "";
   }
 
   async goto() {
@@ -39,19 +45,19 @@ class FormPage {
   }
 
   async fillMandatoryFields() {
-    const fakeName = faker.person.firstName();
-    const fakeSurname = faker.person.lastName();
-    const fakeEmail = faker.internet.email();
-    const fakeMobile = faker.number
+    this.fakeName = faker.person.firstName();
+    this.fakeSurname = faker.person.lastName();
+    this.fakeEmail = faker.internet.email();
+    this.fakeMobile = faker.number
       .int({ min: 1000000000, max: 9999999999 })
       .toString();
-    const fakeAddress = faker.location.streetAddress();
+    this.fakeAddress = faker.location.streetAddress();
 
-    await this.firstName.fill(fakeName);
-    await this.lastName.fill(fakeSurname);
-    await this.email.fill(fakeEmail);
+    await this.firstName.fill(this.fakeName);
+    await this.lastName.fill(this.fakeSurname);
+    await this.email.fill(this.fakeEmail);
     await this.genderMale.click();
-    await this.mobile.fill(fakeMobile);
+    await this.mobile.fill(this.fakeMobile);
 
     await this.dobInput.scrollIntoViewIfNeeded();
     await this.page.waitForSelector("#dateOfBirthInput", { state: "visible" });
@@ -62,7 +68,7 @@ class FormPage {
       )
       .click();
 
-    await this.address.fill(fakeAddress);
+    await this.address.fill(this.fakeAddress);
 
     await this.state.scrollIntoViewIfNeeded();
     await this.page.waitForSelector("#state", { state: "visible" });
