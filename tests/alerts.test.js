@@ -36,7 +36,7 @@ test.describe("Alerts on ToolsQA", () => {
       await dialog.accept();
     });
     await alerts.clickConfirmButton();
-    await expect(await alerts.getConfirmResult()).resolves.toMatch("You selected Ok");
+    await expect(await alerts.getConfirmResult()).toMatch("You selected Ok");
   });
 
   test("Prompt alert appears and input is handled", async ({ page }) => {
@@ -46,6 +46,6 @@ test.describe("Alerts on ToolsQA", () => {
       await dialog.accept("Test User");
     });
     await alerts.clickPromptButton();
-    await expect(await alerts.getPromptResult()).resolves.toMatch("You entered Test User");
+    await expect(await alerts.getPromptResult()).toMatch("You entered Test User");
   });
 });
