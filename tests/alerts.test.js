@@ -22,13 +22,11 @@ test.describe("Alerts on ToolsQA", () => {
   });
 
   test("Delayed alert appears after 5 seconds", async ({ page }) => {
-    page.once("dialog", async (dialog) => {
-      expect(dialog.message()).toBe("This alert appeared after 5 seconds");
-      await dialog.accept();
-    });
+    const dialogPromise = page.waitForEvent("dialog");
     await alerts.clickTimerAlertButton();
-    await alerts.clickTimerAlertButton();
-    await page.waitForSelector('#alert-triggered', { state: 'visible' });
+    const dialog = await dialogPromise;
+    expect(dialog.message()).toBe("This alert appeared after 5 seconds");
+    await dialog.accept();
   });
 
   test("Confirm alert appears and is accepted", async ({ page }) => {
@@ -38,16 +36,16 @@ test.describe("Alerts on ToolsQA", () => {
       await dialog.accept();
     });
     await alerts.clickConfirmButton();
-    await expect(alerts.confirmResult).toHaveText("You selected Ok");
+    await expect(await alerts.getConfirmResult()).resolves.toMatch("You selected Ok");
   });
 
   test("Prompt alert appears and input is handled", async ({ page }) => {
     page.once("dialog", async (dialog) => {
       expect(dialog.type()).toBe("prompt");
-      expect(dialog.message()).toBe("Please enter your name");  
+      expect(dialog.message()).toBe("Please enter your name");
       await dialog.accept("Test User");
     });
     await alerts.clickPromptButton();
-    await expect(alerts.promptResult).toHaveText("You entered Test User");
+    await expect(await alerts.getPromptResult()).resolves.toMatch("You entered Test User");
   });
 });
