@@ -1,4 +1,3 @@
-const { expect } = require("@playwright/test");
 const { BasePage } = require("./BasePage");
 
 class TooltipsPage extends BasePage {
@@ -24,17 +23,23 @@ class TooltipsPage extends BasePage {
     }
 
     const element = this.page.locator(elementSelector);
-    const tooltip = this.page.locator(".tooltip-inner");
 
     await element.scrollIntoViewIfNeeded();
     await element.waitFor({ state: "visible", timeout: 5000 });
     await element.hover();
 
-    await expect(tooltip).toBeVisible({ timeout: 3000 });
+    const tooltip = this.page.locator(".tooltip-inner");
+    await this.page.waitForSelector(".tooltip-inner", { timeout: 3000 });
 
-    const text = await tooltip.textContent();
-    const trimmed = text?.trim();
-    return trimmed === expectedText;
+    const actualText = await tooltip.textContent();
+    const trimmed = actualText?.trim();
+
+    if (trimmed !== expectedText) {
+      await this.page.screenshot({ path: `mismatch-${elementName}.png`, fullPage: true });
+      return false;
+    }
+
+    return true;
   }
 }
 
