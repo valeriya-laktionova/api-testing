@@ -1,5 +1,5 @@
 const { BasePage } = require("./BasePage");
-
+//TODO move locators to the constructor
 class DragAndDropPage extends BasePage {
   constructor(page) {
     super(page);

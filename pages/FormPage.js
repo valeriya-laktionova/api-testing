@@ -1,6 +1,6 @@
 const { faker } = require("@faker-js/faker");
 const { BasePage } = require("./BasePage");
-
+//TODO move locators to the constructor
 class FormPage extends BasePage {
   constructor(page) {
     super(page);

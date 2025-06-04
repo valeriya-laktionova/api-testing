@@ -1,5 +1,5 @@
 const { BasePage } = require('./BasePage');
-
+//TODO move locators to the constructor
 class DatePickerPage extends BasePage {
   constructor(page) {
     super(page);

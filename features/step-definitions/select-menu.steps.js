@@ -32,7 +32,15 @@ When(
     await selectMenu.selectFromMultiSelectDropDown(opts);
   }
 );
-
+//TODO rewrite without using case e.g
+//const fieldNameMap = {
+// "select value": selectMenu.getSelectedSelectValue,
+// "select one": selectMenu.getSelectedSelectOneValue,
+// "old select menu": selectMenu.getSelectedOldSelectMenuValue,
+// "multi select dropdown": selectMenu.getSelectedMultiSelectDropDownValues,
+// "cars": selectMenu.getSelectedCarsValues,
+//};
+//
 Then(
   "Selected value in field {string} should contain {string}",
   async (field, expectedValue) => {
