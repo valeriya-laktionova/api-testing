@@ -1,15 +1,18 @@
 const { faker } = require("@faker-js/faker");
 const { BasePage } = require("./BasePage");
-//TODO move locators to the constructor
+
 class FormPage extends BasePage {
   constructor(page) {
     super(page);
+    this.page = page;
+
     this.firstName = page.locator("#firstName");
     this.lastName = page.locator("#lastName");
     this.email = page.locator("#userEmail");
     this.genderMale = page.locator('label[for="gender-radio-1"]');
     this.mobile = page.locator("#userNumber");
     this.dobInput = page.locator("#dateOfBirthInput");
+    this.dobDay15 = page.locator(".react-datepicker__day--015:not(.react-datepicker__day--outside-month)");
     this.subjectInput = page.locator("#subjectsInput");
     this.hobbiesCheckbox = page.locator('label[for="hobbies-checkbox-1"]');
     this.uploadPicture = page.locator("#uploadPicture");
@@ -21,7 +24,6 @@ class FormPage extends BasePage {
     this.submitButton = page.locator("#submit");
     this.modalTitle = page.locator("#example-modal-sizes-title-lg");
     this.modal = page.locator(".modal-content");
-
     this.fakeName = "";
     this.fakeSurname = "";
     this.fakeEmail = "";
@@ -47,21 +49,16 @@ class FormPage extends BasePage {
     await this.mobile.fill(this.fakeMobile);
 
     await this.dobInput.scrollIntoViewIfNeeded();
-    await this.page.waitForSelector("#dateOfBirthInput", { state: "visible" });
     await this.dobInput.click();
-    await this.page
-      .locator(".react-datepicker__day--015:not(.react-datepicker__day--outside-month)")
-      .click();
+    await this.dobDay15.click();
 
     await this.address.fill(this.fakeAddress);
 
     await this.state.scrollIntoViewIfNeeded();
-    await this.page.waitForSelector("#state", { state: "visible" });
     await this.state.click();
     await this.stateOption.first().click();
 
     await this.city.scrollIntoViewIfNeeded();
-    await this.page.waitForSelector("#city", { state: "visible" });
     await this.city.click();
     await this.cityOption.first().click();
   }

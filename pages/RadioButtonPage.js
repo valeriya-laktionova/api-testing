@@ -1,8 +1,12 @@
 const { BasePage } = require("./BasePage");
-//TODO move locators to the constructor
+
 class RadioButtonPage extends BasePage {
   constructor(page) {
     super(page);
+    this.page = page;
+
+    this.radioLabel = (label) => page.locator(`label:has-text("${label}")`);
+    this.resultText = page.locator(".text-success");
   }
 
   async goto() {
@@ -10,14 +14,13 @@ class RadioButtonPage extends BasePage {
   }
 
   async selectRadio(label) {
-    const radioButton = this.page.locator(`label:has-text("${label}")`);
+    const radioButton = this.radioLabel(label);
     await radioButton.waitFor({ state: "visible", timeout: 10000 });
     await radioButton.click();
   }
 
   async getResultText() {
-    const result = await this.page.locator(".text-success").textContent();
-    return result.trim();
+    return (await this.resultText.textContent()).trim();
   }
 }
 

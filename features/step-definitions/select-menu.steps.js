@@ -25,57 +25,36 @@ When("I select {string} from old select menu", async (option) => {
   await selectMenu.selectFromOldSelectMenuByText(option);
 });
 
-When(
-  "I select multiple values from multi select dropdown: {string}",
-  async (options) => {
-    const opts = options.split(/,\s*/);
-    await selectMenu.selectFromMultiSelectDropDown(opts);
-  }
-);
-//TODO rewrite without using case e.g
-//const fieldNameMap = {
-// "select value": selectMenu.getSelectedSelectValue,
-// "select one": selectMenu.getSelectedSelectOneValue,
-// "old select menu": selectMenu.getSelectedOldSelectMenuValue,
-// "multi select dropdown": selectMenu.getSelectedMultiSelectDropDownValues,
-// "cars": selectMenu.getSelectedCarsValues,
-//};
-//
-Then(
-  "Selected value in field {string} should contain {string}",
-  async (field, expectedValue) => {
-    let actualValues;
+When("I select multiple values from multi select dropdown: {string}", async (options) => {
+  const opts = options.split(/,\s*/);
+  await selectMenu.selectFromMultiSelectDropDown(opts);
+});
 
-    switch (field.toLowerCase()) {
-      case "select value":
-        actualValues = await selectMenu.getSelectedSelectValue();
-        expect(actualValues?.trim()).toContain(expectedValue);
-        break;
-      case "select one":
-        actualValues = await selectMenu.getSelectedSelectOneValue();
-        expect(actualValues?.trim()).toContain(expectedValue);
-        break;
-      case "old select menu":
-        actualValues = await selectMenu.getSelectedOldSelectMenuValue();
-        expect(actualValues?.trim()).toContain(expectedValue);
-        break;
-      case "multi select dropdown":
-        actualValues = await selectMenu.getSelectedMultiSelectDropDownValues();
-        expect(actualValues).toEqual(expect.arrayContaining([expectedValue]));
-        break;
-      case "cars":
-        actualValues = await selectMenu.getSelectedCarsValues();
-        expect(actualValues).toEqual(expect.arrayContaining([expectedValue]));
-        break;
-      default:
-        throw new Error(`Unknown field name: ${field}`);
-    }
+Then("Selected value in field {string} should contain {string}", async (field, expectedValue) => {
+  const fieldNameMap = {
+    "select value": () => selectMenu.getSelectedSelectValue(),
+    "select one": () => selectMenu.getSelectedSelectOneValue(),
+    "old select menu": () => selectMenu.getSelectedOldSelectMenuValue(),
+    "multi select dropdown": () => selectMenu.getSelectedMultiSelectDropDownValues(),
+    "cars": () => selectMenu.getSelectedCarsValues(),
+  };
+
+  const getter = fieldNameMap[field.toLowerCase()];
+  if (!getter) {
+    throw new Error(`Unknown field name: "${field}". Valid keys are: ${Object.keys(fieldNameMap).join(", ")}`);
   }
-);
+
+  const actual = await getter();
+
+  if (Array.isArray(actual)) {
+    expect(actual).toEqual(expect.arrayContaining([expectedValue]));
+  } else {
+    expect(actual?.trim()).toContain(expectedValue);
+  }
+});
 
 After(async () => {
   if (browser) {
     await browser.close();
   }
 });
-
