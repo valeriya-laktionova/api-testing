@@ -10,7 +10,7 @@ class DatePickerPage extends BasePage {
     await this.open("https://demoqa.com/date-picker");
     await this.dateInput.waitFor({ state: "visible" });
   }
-
+//TODO rewrite selectDate with dropowns
   async selectDate(dateString) {
     await this.dateInput.click();
     await this.dateInput.fill("");
