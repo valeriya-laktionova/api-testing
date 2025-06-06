@@ -4,7 +4,11 @@ class SelectMenuPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
+//TODO Dynamic/Generated CSS Classes:
 
+// The class name css-12jo7m5 appears to be auto-generated, likely by a CSS-in-JS library like Emotion, Styled-components, or similar.
+// Such class names can change frequently due to updates or re-compilation of styles, breaking your tests unexpectedly.
+    //Try use xpath strategy
     this.selectValueDropdown = page.locator("#withOptGroup");
     this.selectValueMenu = page.locator(".css-26l3qy-menu");
     this.selectValueResult = page.locator("#withOptGroup [class*='singleValue']");

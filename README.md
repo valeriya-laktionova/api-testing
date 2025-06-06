@@ -186,3 +186,14 @@ Artifacts uploaded:
 
 The element must be visible and enabled.
 The element must not be detached from the DOM.
+
+# Review 06 06
+
+* Remove all locators to the Page Object constructor 
+* Remove  await browser.close(); to the hook.js create 
+ ```javascript
+After(async function () {
+  await this.closeBrowser();
+  });
+```
+* and Before too.
