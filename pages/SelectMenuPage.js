@@ -4,27 +4,19 @@ class SelectMenuPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
-//TODO Dynamic/Generated CSS Classes:
-
-// The class name css-12jo7m5 appears to be auto-generated, likely by a CSS-in-JS library like Emotion, Styled-components, or similar.
-// Such class names can change frequently due to updates or re-compilation of styles, breaking your tests unexpectedly.
-    //Try use xpath strategy
-    this.selectValueDropdown = page.locator("#withOptGroup");
-    this.selectValueMenu = page.locator(".css-26l3qy-menu");
-    this.selectValueResult = page.locator("#withOptGroup [class*='singleValue']");
-
-    this.selectOneDropdown = page.locator("#selectOne");
-    this.selectOneMenu = page.locator(".css-26l3qy-menu");
-    this.selectOneResult = page.locator("#selectOne [class*='singleValue']");
-
-    this.oldSelectMenuDropdown = page.locator("#oldSelectMenu");
-
-    this.multiSelectInput = page.locator("#react-select-4-input");
-    this.multiSelectMenu = page.locator(".css-26l3qy-menu");
-    this.multiSelectValues = page.locator(".css-1rhbuit-multiValue .css-12jo7m5");
-
-    this.carsDropdown = page.locator("#cars");
   }
+
+  selectValueDropdown = this.page.locator("#withOptGroup");
+  selectValueMenu = this.page.locator(".css-26l3qy-menu");
+  selectValueResult = this.page.locator("#withOptGroup [class*='singleValue']");
+  selectOneDropdown = this.page.locator("#selectOne");
+  selectOneMenu = this.page.locator(".css-26l3qy-menu");
+  selectOneResult = this.page.locator("#selectOne [class*='singleValue']");
+  oldSelectMenuDropdown = this.page.locator("#oldSelectMenu");
+  multiSelectInput = this.page.locator("#react-select-4-input");
+  multiSelectMenu = this.page.locator(".css-26l3qy-menu");
+  multiSelectValues = this.page.locator(".css-1rhbuit-multiValue .css-12jo7m5");
+  carsDropdown = this.page.locator("#cars");
 
   async goto() {
     await this.open("https://demoqa.com/select-menu");
@@ -59,7 +51,9 @@ class SelectMenuPage extends BasePage {
   }
 
   async getSelectedOldSelectMenuValue() {
-    return (await this.oldSelectMenuDropdown.locator("option:checked").textContent()).trim();
+    return (
+      await this.oldSelectMenuDropdown.locator("option:checked").textContent()
+    ).trim();
   }
 
   async selectFromMultiSelectDropDown(options) {
@@ -77,7 +71,9 @@ class SelectMenuPage extends BasePage {
     await this.carsDropdown.waitFor({ state: "visible" });
 
     for (const option of options) {
-      await this.carsDropdown.locator(`option[value="${option}"]`).waitFor({ state: "visible" });
+      await this.carsDropdown
+        .locator(`option[value="${option}"]`)
+        .waitFor({ state: "visible" });
     }
 
     await this.carsDropdown.selectOption(options);

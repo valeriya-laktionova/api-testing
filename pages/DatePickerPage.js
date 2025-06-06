@@ -4,13 +4,15 @@ class DatePickerPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
-
-    this.dateInput = page.locator("#datePickerMonthYearInput");
-    this.monthDropdown = page.locator(".react-datepicker__month-select");
-    this.yearDropdown = page.locator(".react-datepicker__year-select");
-    this.dayButton = (day) =>
-      page.locator(`.react-datepicker__day:not(.react-datepicker__day--outside-month):has-text("${day}")`);
   }
+
+  dateInput = this.page.locator("#datePickerMonthYearInput");
+  monthDropdown = this.page.locator(".react-datepicker__month-select");
+  yearDropdown = this.page.locator(".react-datepicker__year-select");
+  dayButton = (day) =>
+    this.page.locator(
+      `.react-datepicker__day:not(.react-datepicker__day--outside-month):has-text("${day}")`
+    );
 
   async goto() {
     await this.open("https://demoqa.com/date-picker");

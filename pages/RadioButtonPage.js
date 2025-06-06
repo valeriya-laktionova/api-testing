@@ -4,10 +4,10 @@ class RadioButtonPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
-
-    this.radioLabel = (label) => page.locator(`label:has-text("${label}")`);
-    this.resultText = page.locator(".text-success");
   }
+
+  radioLabel = (label) => this.page.locator(`label:has-text("${label}")`);
+  resultText = this.page.locator(".text-success");
 
   async goto() {
     await this.open("https://demoqa.com/radio-button");

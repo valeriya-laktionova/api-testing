@@ -4,13 +4,13 @@ class DragAndDropPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
-
-    this.simpleTab = page.locator("#droppableExample-tab-simple");
-    this.container = page.locator("#droppableExample-tabpane-simple");
-    this.source = this.container.locator("#draggable");
-    this.target = this.container.locator("#droppable").first();
-    this.resultText = this.target.locator("p");
   }
+
+  simpleTab = this.page.locator("#droppableExample-tab-simple");
+  container = this.page.locator("#droppableExample-tabpane-simple");
+  source = this.container.locator("#draggable");
+  target = this.container.locator("#droppable").first();
+  resultText = this.target.locator("p");
 
   async goto() {
     await this.open("https://demoqa.com/droppable");

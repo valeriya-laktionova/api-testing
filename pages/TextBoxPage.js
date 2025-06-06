@@ -7,17 +7,18 @@ class TextBoxPage extends BasePage {
    */
   constructor(page) {
     super(page);
-    this.fullNameInput = page.locator("#userName");
-    this.emailInput = page.locator("#userEmail");
-    this.currentAddressInput = page.locator("#currentAddress");
-    this.permanentAddressInput = page.locator("#permanentAddress");
-    this.submitButton = page.locator("#submit");
-    this.outputBox = page.locator("#output");
-    this.outputName = page.locator("#name");
-    this.outputEmail = page.locator("#email");
-    this.outputCurrentAddress = page.locator("p#currentAddress");
-    this.outputPermanentAddress = page.locator("p#permanentAddress");
   }
+
+  fullNameInput = this.page.locator("#userName");
+  emailInput = this.page.locator("#userEmail");
+  currentAddressInput = this.page.locator("#currentAddress");
+  permanentAddressInput = this.page.locator("#permanentAddress");
+  submitButton = this.page.locator("#submit");
+  outputBox = this.page.locator("#output");
+  outputName = this.page.locator("#name");
+  outputEmail = this.page.locator("#email");
+  outputCurrentAddress = this.page.locator("p#currentAddress");
+  outputPermanentAddress = this.page.locator("p#permanentAddress");
 
   async goto() {
     await this.open("https://demoqa.com/text-box");

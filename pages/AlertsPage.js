@@ -1,4 +1,4 @@
-const { BasePage } = require('./BasePage');
+const { BasePage } = require("./BasePage");
 
 class AlertsPage extends BasePage {
   /**
@@ -6,16 +6,17 @@ class AlertsPage extends BasePage {
    */
   constructor(page) {
     super(page);
-    this.alertButton = page.locator('#alertButton');
-    this.timerAlertButton = page.locator('#timerAlertButton');
-    this.confirmButton = page.locator('#confirmButton');
-    this.promptButton = page.locator('#promtButton');
-    this.confirmResult = page.locator('#confirmResult');
-    this.promptResult = page.locator('#promptResult');
   }
 
+  alertButton = this.page.locator("#alertButton");
+  timerAlertButton = this.page.locator("#timerAlertButton");
+  confirmButton = this.page.locator("#confirmButton");
+  promptButton = this.page.locator("#promtButton");
+  confirmResult = this.page.locator("#confirmResult");
+  promptResult = this.page.locator("#promptResult");
+
   async goto() {
-    await this.open('https://demoqa.com/alerts');
+    await this.open("https://demoqa.com/alerts");
   }
 
   async clickAlertButton() {

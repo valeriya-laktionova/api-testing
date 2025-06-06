@@ -5,31 +5,33 @@ class FormPage extends BasePage {
   constructor(page) {
     super(page);
     this.page = page;
-
-    this.firstName = page.locator("#firstName");
-    this.lastName = page.locator("#lastName");
-    this.email = page.locator("#userEmail");
-    this.genderMale = page.locator('label[for="gender-radio-1"]');
-    this.mobile = page.locator("#userNumber");
-    this.dobInput = page.locator("#dateOfBirthInput");
-    this.dobDay15 = page.locator(".react-datepicker__day--015:not(.react-datepicker__day--outside-month)");
-    this.subjectInput = page.locator("#subjectsInput");
-    this.hobbiesCheckbox = page.locator('label[for="hobbies-checkbox-1"]');
-    this.uploadPicture = page.locator("#uploadPicture");
-    this.address = page.locator("#currentAddress");
-    this.state = page.locator("#state");
-    this.stateOption = page.locator('div[id^="react-select-3-option"]');
-    this.city = page.locator("#city");
-    this.cityOption = page.locator('div[id^="react-select-4-option"]');
-    this.submitButton = page.locator("#submit");
-    this.modalTitle = page.locator("#example-modal-sizes-title-lg");
-    this.modal = page.locator(".modal-content");
-    this.fakeName = "";
-    this.fakeSurname = "";
-    this.fakeEmail = "";
-    this.fakeMobile = "";
-    this.fakeAddress = "";
   }
+
+  firstName = this.page.locator("#firstName");
+  lastName = this.page.locator("#lastName");
+  email = this.page.locator("#userEmail");
+  genderMale = this.page.locator('label[for="gender-radio-1"]');
+  mobile = this.page.locator("#userNumber");
+  dobInput = this.page.locator("#dateOfBirthInput");
+  dobDay15 = this.page.locator(
+    ".react-datepicker__day--015:not(.react-datepicker__day--outside-month)"
+  );
+  subjectInput = this.page.locator("#subjectsInput");
+  hobbiesCheckbox = this.page.locator('label[for="hobbies-checkbox-1"]');
+  uploadPicture = this.page.locator("#uploadPicture");
+  address = this.page.locator("#currentAddress");
+  state = this.page.locator("#state");
+  stateOption = this.page.locator('div[id^="react-select-3-option"]');
+  city = this.page.locator("#city");
+  cityOption = this.page.locator('div[id^="react-select-4-option"]');
+  submitButton = this.page.locator("#submit");
+  modalTitle = this.page.locator("#example-modal-sizes-title-lg");
+  modal = this.page.locator(".modal-content");
+  fakeName = "";
+  fakeSurname = "";
+  fakeEmail = "";
+  fakeMobile = "";
+  fakeAddress = "";
 
   async goto() {
     await this.open("https://demoqa.com/automation-practice-form");
@@ -39,7 +41,9 @@ class FormPage extends BasePage {
     this.fakeName = faker.person.firstName();
     this.fakeSurname = faker.person.lastName();
     this.fakeEmail = faker.internet.email();
-    this.fakeMobile = faker.number.int({ min: 1000000000, max: 9999999999 }).toString();
+    this.fakeMobile = faker.number
+      .int({ min: 1000000000, max: 9999999999 })
+      .toString();
     this.fakeAddress = faker.location.streetAddress();
 
     await this.firstName.fill(this.fakeName);
