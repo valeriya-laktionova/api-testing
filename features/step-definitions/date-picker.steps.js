@@ -19,8 +19,12 @@ When("I select the date {string}", { timeout: 15000 }, async (date) => {
   await datePickerPage.selectDate(date);
 });
 
-Then("the selected date should be {string}", { timeout: 10000 }, async (expectedDate) => {
-  const actualDate = await datePickerPage.getSelectedDate();
-  expect(actualDate).toBe(expectedDate);
-  await browser.close();
-});
+Then(
+  "selected value in field {string} should contain {string}",
+  { timeout: 10000 },
+  async (fieldId, expectedValue) => {
+    const input = page.locator(`#${fieldId}`);
+    await expect(input).toHaveValue(expectedValue);
+    await browser.close();
+  }
+);
