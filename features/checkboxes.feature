@@ -4,7 +4,8 @@ Feature: Checkboxes
 
   @checkboxes @smoke
   Scenario Outline: Select and validate a checkbox
-    Given I open the checkbox page
+    Given I open the page "https://demoqa.com/checkbox"
+    When I navigate to the checkbox page
     When I expand all checkboxes
     And I select the "<checkbox>" checkbox
     Then "<checkbox>" checkbox should be checked

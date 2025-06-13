@@ -1,24 +1,25 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
+const { When, Then, After } = require("@cucumber/cucumber");
 const { expect } = require("@playwright/test");
-const { launchPage } = require("../../utils/setupPage");
-const { blockAds } = require("../../utils/adblock");
 const { RadioButtonPage } = require("../../pages/RadioButtonPage");
 
-let browser, page, radioButtonPage;
+let radioButtonPage;
 
-Given("I open the radio button page", { timeout: 20000 }, async () => {
-  ({ browser, page } = await launchPage());
-  await blockAds(page);
-  radioButtonPage = new RadioButtonPage(page);
+When("I navigate to the radio button page", { timeout: 20000 }, async function () {
+  radioButtonPage = new RadioButtonPage(this.page);
   await radioButtonPage.goto();
 });
 
-When("I select the {string} radio button", { timeout: 10000 }, async (label) => {
+When("I select the {string} radio button", { timeout: 10000 }, async function (label) {
   await radioButtonPage.selectRadio(label);
 });
 
-Then("the result should be {string}", async (expected) => {
+Then("the result should be {string}", async function (expected) {
   const actual = await radioButtonPage.getResultText();
   expect(actual).toBe(expected);
-  await browser.close();
+});
+
+After(async function () {
+  if (this.browser) {
+    await this.browser.close();
+  }
 });
