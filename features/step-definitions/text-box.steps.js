@@ -26,8 +26,3 @@ Then("the output should match the input data", { timeout: 10000 }, async functio
   expect(output.permanentAddress).toContain(input.permanentAddress);
 });
 
-After(async function () {
-  if (this.browser) {
-    await this.browser.close();
-  }
-});

@@ -14,8 +14,3 @@ Then("the tooltip for {string} should be {string}", { timeout: 15000 }, async fu
   expect(result).toBe(true);
 });
 
-After(async function () {
-  if (this.browser) {
-    await this.browser.close();
-  }
-});

@@ -18,8 +18,3 @@ Then("the result should be {string}", async function (expected) {
   expect(actual).toBe(expected);
 });
 
-After(async function () {
-  if (this.browser) {
-    await this.browser.close();
-  }
-});

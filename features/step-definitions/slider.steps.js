@@ -18,8 +18,3 @@ Then("the slider should show value {string}", { timeout: 10000 }, async function
   expect(actualValue).toBe(expectedValue);
 });
 
-After(async function () {
-  if (this.browser) {
-    await this.browser.close();
-  }
-});

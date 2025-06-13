@@ -31,8 +31,3 @@ Then("the form fields should contain the entered data", async function () {
   expect(await formPage.address.inputValue()).toBe(formPage.fakeAddress);
 });
 
-After(async function () {
-  if (this.browser) {
-    await this.browser.close();
-  }
-});

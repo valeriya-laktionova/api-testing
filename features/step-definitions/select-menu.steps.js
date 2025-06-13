@@ -49,8 +49,3 @@ Then("Selected value in field {string} should contain {string}", async function 
   }
 });
 
-After(async function () {
-  if (this.browser) {
-    await this.browser.close();
-  }
-});
