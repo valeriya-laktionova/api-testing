@@ -22,7 +22,7 @@
     "@cucumber/cucumber": "^11.3.0",
     "@faker-js/faker": "^9.8.0",
     "@ghostery/adblocker-playwright": "^2.6.1",
-    "@playwright/test": "^1.52.0",
+    "@playwright/test": "^1.53.0",
     "cross-env": "^7.0.3",
     "cross-fetch": "^4.1.0",
     "cucumber-html-reporter": "^6.0.0",
